@@ -5,6 +5,7 @@ import GenreFilter from "../components/Filters/GenreFilter";
 import SearchBar from "../components/Filters/SearchBar";
 import SortSelect from "../components/Filters/SortSelect";
 import PodcastGrid from "../components/Podcast/PodcastGrid";
+import Carousel from "../components/UI/Carousel";
 import Loading from "../components/UI/Loading";
 import Error from "../components/UI/Error";
 import styles from "./Home.module.css";
@@ -14,8 +15,9 @@ const PAGE_SIZE = 10;
 /**
  * @component Home
  * Home page component that displays podcast list with filtering, search, sort, and pagination.
+ * Includes a recommended shows carousel at the top.
  * Uses URL search parameters to maintain state across navigation.
- * @returns {jsx.Element} The home page with podcast grid and controls
+ * @returns {JSX.Element} The home page with carousel, podcast grid and controls
  */
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -72,13 +74,9 @@ export default function Home() {
     } else if (sortOrder === "title-desc") {
       filtered.sort((a, b) => b.title.localeCompare(a.title));
     } else if (sortOrder === "updated-desc") {
-      filtered.sort(
-        (a, b) => new Date(b.updated) - new Date(a.updated)
-      );
+      filtered.sort((a, b) => new Date(b.updated) - new Date(a.updated));
     } else if (sortOrder === "updated-asc") {
-      filtered.sort(
-        (a, b) => new Date(a.updated) - new Date(b.updated)
-      );
+      filtered.sort((a, b) => new Date(a.updated) - new Date(b.updated));
     }
 
     setFilteredShows(filtered);
@@ -118,6 +116,9 @@ export default function Home() {
 
   return (
     <main className={styles.home}>
+      {/* Recommended Shows Carousel */}
+      <Carousel shows={shows} />
+
       <section className={styles.filters}>
         <GenreFilter
           selectedGenreId={selectedGenre}

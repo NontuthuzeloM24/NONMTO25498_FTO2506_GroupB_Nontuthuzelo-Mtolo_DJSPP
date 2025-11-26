@@ -5,23 +5,23 @@ const PodcastContext = createContext();
 /**
  * @component PodcastContextProvider
  * Context provider for sharing podcast-related state across the app.
- * Manages audio player, favourites, and theme state with localStorage persistence.
+ * Manages audio player, favorites, and theme state with localStorage persistence.
  * @param {Object} props
  * @param {React.ReactNode} props.children - Child components to wrap with context
  * @returns {JSX.Element} Context provider component
  */
 export function PodcastContextProvider({ children }) {
   const [currentEpisode, setCurrentEpisode] = useState(null);
-  const [favourites, setFavourites] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [theme, setTheme] = useState("light");
 
   /**
-   * Load favourites and theme from localStorage on mount
+   * Load favorites and theme from localStorage on mount
    */
   useEffect(() => {
-    const savedFavourites = localStorage.getItem("favourites");
-    if (savedFavourites) {
-      setFavourites(JSON.parse(savedFavourites));
+    const savedFavorites = localStorage.getItem("favorites");
+    if (savedFavorites) {
+      setFavorites(JSON.parse(savedFavorites));
     }
 
     const savedTheme = localStorage.getItem("theme");
@@ -32,11 +32,11 @@ export function PodcastContextProvider({ children }) {
   }, []);
 
   /**
-   * Save favourites to localStorage whenever they change
+   * Save favorites to localStorage whenever they change
    */
   useEffect(() => {
-    localStorage.setItem("favourites", JSON.stringify(favourites));
-  }, [favourites]);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
   /**
    * Play an episode in the audio player
@@ -54,28 +54,28 @@ export function PodcastContextProvider({ children }) {
   };
 
   /**
-   * Toggle favourite status of an episode
-   * @param {Object} episode - Episode object to favourite/unfavourite
+   * Toggle favorite status of an episode
+   * @param {Object} episode - Episode object to favorite/unfavorite
    */
-  const toggleFavourite = (episode) => {
+  const toggleFavorite = (episode) => {
     const episodeKey = `${episode.showTitle}-${episode.seasonNumber}-${episode.episode}`;
     
-    const exists = favourites.find(
+    const exists = favorites.find(
       (fav) =>
         `${fav.showTitle}-${fav.seasonNumber}-${fav.episode}` === episodeKey
     );
 
     if (exists) {
-      // Remove from favourites
-      setFavourites((prev) =>
+      // Remove from favorites
+      setFavorites((prev) =>
         prev.filter(
           (fav) =>
             `${fav.showTitle}-${fav.seasonNumber}-${fav.episode}` !== episodeKey
         )
       );
     } else {
-      // Add to favourites with timestamp
-      setFavourites((prev) => [
+      // Add to favorites with timestamp
+      setFavorites((prev) => [
         ...prev,
         {
           ...episode,
@@ -86,14 +86,14 @@ export function PodcastContextProvider({ children }) {
   };
 
   /**
-   * Check if an episode is favourited
+   * Check if an episode is favorited
    * @param {number} episodeNumber - Episode number
    * @param {number} seasonNumber - Season number
    * @param {string} showTitle - Show title
-   * @returns {boolean} True if episode is favourited
+   * @returns {boolean} True if episode is favorited
    */
-  const isFavourite = (episodeNumber, seasonNumber, showTitle) => {
-    return favourites.some(
+  const isFavorite = (episodeNumber, seasonNumber, showTitle) => {
+    return favorites.some(
       (fav) =>
         fav.episode === episodeNumber &&
         fav.seasonNumber === seasonNumber &&
@@ -115,9 +115,9 @@ export function PodcastContextProvider({ children }) {
     currentEpisode,
     playEpisode,
     clearCurrentEpisode,
-    favourites,
-    toggleFavourite,
-    isFavourite,
+    favorites,
+    toggleFavorite,
+    isFavorite,
     theme,
     toggleTheme,
   };

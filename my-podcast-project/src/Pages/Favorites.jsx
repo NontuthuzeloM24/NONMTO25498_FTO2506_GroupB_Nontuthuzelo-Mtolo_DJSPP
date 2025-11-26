@@ -2,24 +2,24 @@ import React, { useState } from "react";
 import { usePodcastContext } from "../context/PodcastContext";
 import { Link } from "react-router-dom";
 import { formatDate } from "../utils/formatDate";
-import styles from "./Favourites.module.css";
+import styles from "./Favorites.module.css";
 
 /**
- * @component Favourites
- * Page displaying all favourited episodes, grouped by show title.
+ * @component Favorites
+ * Page displaying all favorited episodes, grouped by show title.
  * Supports sorting by title (A-Z, Z-A) and date added (newest, oldest).
- * @returns {JSX.Element} Favourites page with grouped episode list
+ * @returns {JSX.Element} Favorites page with grouped episode list
  */
-export default function Favourites() {
-  const { favourites, toggleFavourite, playEpisode } = usePodcastContext();
+export default function Favorites() {
+  const { favorites, toggleFavorite, playEpisode } = usePodcastContext();
   const [sortOrder, setSortOrder] = useState("date-desc");
 
   /**
-   * Group favourites by show title
+   * Group favorites by show title
    * @returns {Object} Object with show titles as keys and episode arrays as values
    */
   const groupByShow = () => {
-    return favourites.reduce((acc, fav) => {
+    return favorites.reduce((acc, fav) => {
       const showTitle = fav.showTitle || "Unknown Show";
       if (!acc[showTitle]) {
         acc[showTitle] = [];
@@ -31,7 +31,7 @@ export default function Favourites() {
 
   /**
    * Sort grouped shows based on selected sort order
-   * @param {Object} grouped - Grouped favourites object
+   * @param {Object} grouped - Grouped favorites object
    * @returns {Array} Sorted array of [showTitle, episodes] pairs
    */
   const sortShows = (grouped) => {
@@ -61,12 +61,12 @@ export default function Favourites() {
   const grouped = groupByShow();
   const sortedShows = sortShows(grouped);
 
-  if (favourites.length === 0) {
+  if (favorites.length === 0) {
     return (
-      <main className={styles.favourites}>
-        <h1 className={styles.heading}>❤️ Your Favourites</h1>
+      <main className={styles.favorites}>
+        <h1 className={styles.heading}>❤️ Your Favorites</h1>
         <div className={styles.empty}>
-          <p>You haven't added any favourites yet.</p>
+          <p>You haven't added any favorites yet.</p>
           <Link to="/" className={styles.link}>
             Explore Shows
           </Link>
@@ -76,9 +76,9 @@ export default function Favourites() {
   }
 
   return (
-    <main className={styles.favourites}>
+    <main className={styles.favorites}>
       <div className={styles.header}>
-        <h1 className={styles.heading}>❤️ Your Favourites</h1>
+        <h1 className={styles.heading}>❤️ Your Favorites</h1>
         <div className={styles.sortControl}>
           <label htmlFor="fav-sort">Sort by:</label>
           <select
@@ -129,8 +129,8 @@ export default function Favourites() {
                     </button>
                     <button
                       className={styles.removeButton}
-                      onClick={() => toggleFavourite(episode)}
-                      aria-label="Remove from favourites"
+                      onClick={() => toggleFavorite(episode)}
+                      aria-label="Remove from favorites"
                     >
                       ❤️
                     </button>

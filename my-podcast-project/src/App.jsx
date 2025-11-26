@@ -2,11 +2,11 @@ import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { PodcastContextProvider } from "./context/PodcastContext";
-import Header from "../components/UI/Header";
-import AudioPlayer from "../components/UI/AudioPlayer";
+import Header from "./components/UI/Header";
+import AudioPlayer from "./components/UI/AudioPlayer";
 import Home from "./Pages/Home";
 import ShowDetails from "./Pages/ShowDetails";
-import Favourites from "./Pages/Favourites";
+import Favorites from "./Pages/Favorites";
 
 /**
  * @component App
@@ -22,7 +22,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/show/:id" element={<ShowDetails />} />
-          <Route path="/favourites" element={<Favourites />} />
+          <Route path="/favorites" element={<Favorites />} />
         </Routes>
         <AudioPlayer />
       </div>

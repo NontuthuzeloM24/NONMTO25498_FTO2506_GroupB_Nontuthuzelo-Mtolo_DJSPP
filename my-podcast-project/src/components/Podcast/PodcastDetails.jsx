@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { formatDate } from "../../utils/formatDate";
 import EpisodeCard from "./EpisodeCard";
-import styles from "./PodcastDetail.module.css";
+import styles from "./PodcastDetails.module.css";
 
 /**
  * @component PodcastDetail

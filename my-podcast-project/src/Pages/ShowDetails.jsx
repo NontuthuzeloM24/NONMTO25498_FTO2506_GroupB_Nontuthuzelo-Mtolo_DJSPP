@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { fetchShowById } from "../api/fetchData";
-import PodcastDetail from "./components/Podcast/PodcastDetail";
+import { fetchShowById } from "./api/fetchData";
+import PodcastDetail from "../components/Podcast/PodcastDetail";
 import Loading from "../components/UI/Loading";
-import Error from "./components/UI/Error";
+import Error from "../components/UI/Error";
 import styles from "./ShowDetails.module.css";
 
 /**

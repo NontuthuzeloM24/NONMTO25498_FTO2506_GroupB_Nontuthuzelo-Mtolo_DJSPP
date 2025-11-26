@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { formatDate } from "../../utils/formatDate";
+import EpisodeCard from "./EpisodeCard";
 import styles from "./PodcastDetail.module.css";
 
 /**
@@ -18,6 +19,18 @@ import styles from "./PodcastDetail.module.css";
  */
 export default function PodcastDetail({ show }) {
   const [expandedSeasons, setExpandedSeasons] = useState({});
+
+  const genreMap = {
+    1: "Personal Growth",
+    2: "Investigative Journalism",
+    3: "History",
+    4: "Comedy",
+    5: "Entertainment",
+    6: "Business",
+    7: "Fiction",
+    8: "News",
+    9: "Kids and Family",
+  };
 
   if (!show) {
     return <p className={styles.notFound}>Show not found.</p>;
@@ -50,7 +63,7 @@ export default function PodcastDetail({ show }) {
             <div className={styles.genres}>
               {show.genres.map((genre) => (
                 <span key={genre} className={styles.genreTag}>
-                  Genre {genre}
+                  {genreMap[genre] || `Genre ${genre}`}
                 </span>
               ))}
             </div>
@@ -80,28 +93,17 @@ export default function PodcastDetail({ show }) {
             </button>
 
             {expandedSeasons[season.season] && (
-              <ul className={styles.episodeList}>
+              <div className={styles.episodeList}>
                 {season.episodes.map((episode) => (
-                  <li key={episode.episode} className={styles.episode}>
-                    <img
-                      src={episode.image || season.image || show.image}
-                      alt={episode.title}
-                      className={styles.episodeImage}
-                    />
-                    <div className={styles.episodeInfo}>
-                      <p className={styles.episodeNumber}>
-                        Episode {episode.episode}
-                      </p>
-                      <h4 className={styles.episodeTitle}>{episode.title}</h4>
-                      <p className={styles.episodeDescription}>
-                        {episode.description.length > 150
-                          ? episode.description.slice(0, 150) + "..."
-                          : episode.description}
-                      </p>
-                    </div>
-                  </li>
+                  <EpisodeCard
+                    key={episode.episode}
+                    episode={episode}
+                    showTitle={show.title}
+                    showImage={season.image || show.image}
+                    seasonNumber={season.season}
+                  />
                 ))}
-              </ul>
+              </div>
             )}
           </div>
         ))}

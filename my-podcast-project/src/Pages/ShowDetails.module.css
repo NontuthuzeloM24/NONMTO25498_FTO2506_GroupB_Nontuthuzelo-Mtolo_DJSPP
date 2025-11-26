@@ -1,0 +1,32 @@
+.showDetails {
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.backButton {
+  margin-bottom: 2rem;
+  padding: 0.7rem 1.5rem;
+  background: var(--bg-card);
+  border: 2px solid var(--primary);
+  color: var(--text-light);
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.backButton:hover {
+  background: var(--primary);
+  transform: translateX(-4px);
+}
+
+@media (max-width: 767px) {
+  .showDetails {
+    padding: 1rem 0.5rem;
+  }
+}

@@ -30,7 +30,7 @@ export default function Carousel({ shows }) {
    * Navigate to next show (with looping)
    */
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % shows.length);
+    setCurrentIndex((prev) => (prev + 1) % recommendedShows.length);
   };
 
   /**

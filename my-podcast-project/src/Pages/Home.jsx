@@ -15,9 +15,9 @@ const PAGE_SIZE = 10;
 /**
  * @component Home
  * Home page component that displays podcast list with filtering, search, sort, and pagination.
- * Includes a recommended shows carousel at the top.
+ * Includes a recommended shows carousel below the filters.
  * Uses URL search parameters to maintain state across navigation.
- * @returns {JSX.Element} The home page with carousel, podcast grid and controls
+ * @returns {JSX.Element} The home page with filters, carousel, podcast grid and controls
  */
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -116,25 +116,26 @@ export default function Home() {
 
   return (
     <main className={styles.home}>
-      {/* Recommended Shows Carousel */}
-      <Carousel shows={shows} />
-
+      {/* Filters Section - NOW ON TOP */}
       <section className={styles.filters}>
+        <SearchBar
+          value={searchTerm}
+          onChange={(term) => updateSearchParams({ search: term, page: "1" })}
+        />
         <GenreFilter
           selectedGenreId={selectedGenre}
           onChange={(genreId) =>
             updateSearchParams({ genre: genreId, page: "1" })
           }
         />
-        <SearchBar
-          value={searchTerm}
-          onChange={(term) => updateSearchParams({ search: term, page: "1" })}
-        />
         <SortSelect
           sortOrder={sortOrder}
           onChange={(order) => updateSearchParams({ sort: order, page: "1" })}
         />
       </section>
+
+      {/* Recommended Shows Carousel */}
+      <Carousel shows={shows} />
 
       <div className={styles.gridWrapper}>
         <PodcastGrid shows={pageShows} />

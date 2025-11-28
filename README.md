@@ -62,7 +62,7 @@ Seasons and episodes on the show detail page are stacked vertically for easy scr
 
 ## ✅ Deployment & Meta
 
-App [deployed(https://nonmto-25498-fto-2506-group-b-nontu.vercel.app/)] on Vercel with SPA routing support.
+App deployed on Vercel with SPA routing support.
 
 Added meta tags for SEO and social sharing previews.
 

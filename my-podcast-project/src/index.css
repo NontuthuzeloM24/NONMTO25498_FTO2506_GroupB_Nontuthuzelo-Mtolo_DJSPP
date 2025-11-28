@@ -1,13 +1,30 @@
 /* -----------------------------------------------------
-   GLOBAL ROOT VARIABLES (THEME + COLORS)
+   DEFAULT LIGHT THEME (root)
 ------------------------------------------------------ */
 :root {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   line-height: 1.6;
   font-weight: 400;
 
+  /* Light mode colors */
   --primary: #7c3aed;
   --primary-light: #a78bfa;
+  --bg-dark: #f5f3ff;
+  --bg-card: #ffffff;
+  --text-light: #1c1b22;
+  --text-muted: #6b21a8;
+  --accent: #fbbf24;
+
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+}
+
+/* -----------------------------------------------------
+   DARK MODE THEME
+------------------------------------------------------ */
+html[data-theme="dark"] {
+  --primary: #a78bfa;
+  --primary-light: #c4b5fd;
   --bg-dark: #1c1b22;
   --bg-card: #2a2836;
   --text-light: #f5f3ff;
@@ -16,14 +33,10 @@
 
   background-color: var(--bg-dark);
   color: var(--text-light);
-
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* -----------------------------------------------------
-   GLOBAL ELEMENT RESETS
+   GLOBAL RESET
 ------------------------------------------------------ */
 * {
   box-sizing: border-box;
@@ -44,7 +57,9 @@ body {
   flex-direction: column;
 }
 
-/* Links */
+/* -----------------------------------------------------
+   LINKS
+------------------------------------------------------ */
 a {
   color: var(--primary-light);
   text-decoration: none;
@@ -55,7 +70,9 @@ a:hover {
   color: var(--primary);
 }
 
-/* Buttons */
+/* -----------------------------------------------------
+   BUTTONS
+------------------------------------------------------ */
 button {
   border: none;
   border-radius: 8px;
@@ -84,13 +101,22 @@ button:disabled {
   transform: none;
 }
 
-/* Input & Select */
+/* -----------------------------------------------------
+   INPUT & SELECT
+------------------------------------------------------ */
 input,
 select {
   font-family: inherit;
+  background-color: var(--bg-card);
+  color: var(--text-light);
+  border: 1px solid var(--primary-light);
+  padding: 8px;
+  border-radius: 6px;
 }
 
-/* Scrollbar styling */
+/* -----------------------------------------------------
+   SCROLLBAR
+------------------------------------------------------ */
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -108,14 +134,3 @@ select {
   background: var(--primary-light);
 }
 
-/* Light mode preference - Optional */
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg-dark: #f5f3ff;
-    --bg-card: #ffffff;
-    --text-light: #1c1b22;
-    --text-muted: #6b21a8;
-    --primary: #7c3aed;
-    --primary-light: #6b21a8;
-  }
-}

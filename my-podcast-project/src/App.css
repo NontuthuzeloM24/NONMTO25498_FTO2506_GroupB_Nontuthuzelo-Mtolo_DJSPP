@@ -1,62 +1,762 @@
-:root[data-theme="light"] {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f9fafb;
-  --text-primary: #1f2937;
-  --text-secondary: #6b7280;
-  --card-bg: #ffffff;
-  --header-bg: #ffffff;
-  --border-color: #e5e7eb;
-  --accent-color: #3b82f6;
-  --player-bg: #1a1a1a;
-  --player-text: #ffffff;
-  --seek-bg: #444444;
+/* -------------------------
+   VARIABLES
+-------------------------- */
+:root {
+  --bg: #f7f7f7;
+  --paper: #ffffff;
+  --muted: #666666;
+  --text: #222222;
+  --accent: #6b46ff; /* primary accent */
+  --accent-2: #00b894; /* secondary accent */
+  --border: #e6e6e6;
+  --glass: rgba(255, 255, 255, 0.55);
+  --shadow-sm: 0 2px 8px rgba(16, 24, 40, 0.06);
+  --radius: 10px;
+  --control-height: 40px;
+  --nav-height: 60px;
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
-:root[data-theme="dark"] {
-  --bg-primary: #111827;
-  --bg-secondary: #1f2937;
-  --text-primary: #f9fafb;
-  --text-secondary: #9ca3af;
-  --card-bg: #1f2937;
-  --header-bg: #1f2937;
-  --border-color: #374151;
-  --accent-color: #60a5fa;
-  --player-bg: #0f172a;
-  --player-text: #f9fafb;
-  --seek-bg: #334155;
+/* Dark theme */
+[data-theme="dark"] {
+  --bg: #0f1724;
+  --paper: #0b1220;
+  --muted: #9aa3b2;
+  --text: #e6eef6;
+  --accent: #8b5cf6;
+  --accent-2: #06d6a0;
+  --border: rgba(255, 255, 255, 0.06);
+  --glass: rgba(255, 255, 255, 0.03);
+  --shadow-sm: 0 4px 20px rgba(2, 6, 23, 0.6);
 }
 
+/* =========================================
+   RESET & BASE
+========================================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+html,
+body,
+#root {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-.app {
-  min-height: 100vh;
-  padding-bottom: 120px; /* Space for fixed audio player */
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
-button {
-  font-family: inherit;
 }
 
 a {
+  text-decoration: none;
   color: inherit;
+}
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  background: none;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.app {
+  padding-bottom: 140px;
+}
+
+.card {
+  background: linear-gradient(180deg, var(--paper), var(--glass));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+/* =========================================
+   HEADER
+========================================= */
+header {
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  gap: 12px;
+  background: linear-gradient(
+    180deg,
+    var(--paper),
+    color-mix(in srgb, var(--paper) 90%, transparent)
+  );
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 60;
+}
+
+header .left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+header h1 {
+  font-size: 18px;
+  letter-spacing: -0.2px;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+header nav a {
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: var(--muted);
+}
+header nav a:hover {
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
+.themeToggle {
+  --size: 36px;
+  width: 56px;
+  height: 28px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border) 60%, transparent);
+  display: inline-flex;
+  align-items: center;
+  padding: 4px;
+  gap: 6px;
+  position: relative;
+  transition: all 180ms ease;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02) inset;
+}
+.themeToggle::after {
+  content: "";
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--paper);
+  transform: translateX(0);
+  transition: transform 200ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(2, 6, 23, 0.08);
+}
+
+[data-theme="dark"] .themeToggle {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+}
+[data-theme="dark"] .themeToggle::after {
+  transform: translateX(28px);
+  background: linear-gradient(180deg, #0b1220, #0f1724);
+}
+
+.themeToggle span {
+  position: absolute;
+  font-size: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+  pointer-events: none;
+  opacity: 0.98;
+}
+
+/* =========================================
+   FILTERS (Search, Genre, Sort)
+========================================= */
+.filters {
+  padding: 14px 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper) 95%, transparent),
+    transparent
+  );
+  border-bottom: 1px solid var(--border);
+}
+
+.filters .control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 10px;
+  height: var(--control-height);
+  min-width: 160px;
+  box-shadow: 0 1px 4px rgba(2, 6, 23, 0.03);
+}
+
+.searchBar input[type="text"] {
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  outline: none;
+  width: 320px;
+  background: transparent;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.filters select {
+  appearance: none;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  background: transparent;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.filters label {
+  font-size: 13px;
+  color: var(--muted);
+  margin-right: 6px;
+  white-space: nowrap;
+}
+
+/* shrink on small screens */
+.filters .control.small {
+  min-width: 120px;
+}
+
+/* =========================================
+   CAROUSEL
+========================================= */
+.carouselSection {
+  padding: 18px;
+}
+
+.carouselSection h2 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: var(--muted);
+}
+
+.carouselContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* arrow buttons - bigger, flat, with shadow */
+.navButton {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 18px rgba(11, 20, 40, 0.06);
+  font-size: 20px;
+  color: var(--text);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.navButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px rgba(11, 20, 40, 0.08);
+}
+
+.carousel {
+  overflow-x: auto;
+  display: flex;
+  gap: 14px;
+  padding: 8px 6px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel::-webkit-scrollbar {
+  height: 8px;
+}
+.carousel::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--border) 30%, transparent);
+  border-radius: 8px;
+}
+
+.carouselCard {
+  width: 240px;
+  min-width: 240px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    var(--paper),
+    color-mix(in srgb, var(--paper) 90%, transparent)
+  );
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 20px rgba(2, 6, 23, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+.carouselCard img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+.carouselInfo {
+  padding: 12px;
+}
+.carouselTitle {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.carouselCard .genres {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.genreTag {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  color: var(--muted);
+  border: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+}
+
+.indicators {
+  display: none !important;
+}
+
+/* =========================================
+   PODCAST GRID
+========================================= */
+.gridWrapper {
+  padding: 18px;
+}
+
+.podcastGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.podcastCard {
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: linear-gradient(
+    180deg,
+    var(--paper),
+    color-mix(in srgb, var(--paper) 95%, transparent)
+  );
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.podcastCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.06);
+}
+.podcastCard img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+.podcastCard .info {
+  padding: 12px;
+}
+.podcastCard .title {
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+/* =========================================
+   SHOW DETAILS PAGE
+========================================= */
+.showDetails {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.showDetails .header {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+.showDetails .image {
+  width: 300px;
+  height: 300px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 14px 40px rgba(2, 6, 23, 0.06);
+}
+.showDetails .info {
+  flex: 1;
+}
+.showDetails .title {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.showDetails .description {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.seasons {
+  margin-top: 18px;
+}
+.seasonToggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: var(--paper);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+/* =========================================
+   EPISODE LIST
+========================================= */
+.episodeCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--paper);
+}
+.episodeCard img {
+  width: 88px;
+  height: 88px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.episodeInfo {
+  flex: 1;
+}
+.episodeTitle {
+  font-weight: 700;
+}
+
+.episodeCard .actions button {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 6%, transparent),
+    transparent
+  );
+  color: var(--text);
+}
+
+/* =========================================
+   PAGINATION
+========================================= */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 0;
+}
+.paginationButton {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--paper);
+}
+.paginationButtonActive {
+  background: var(--accent);
+  color: white;
+  border-color: transparent;
+}
+
+/* =========================================
+   AUDIO PLAYER
+========================================= */
+.audioPlayer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 14px 18px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper) 98%, transparent),
+    rgba(0, 0, 0, 0.02)
+  );
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -6px 30px rgba(2, 6, 23, 0.06);
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+}
+
+.audioPlayer > * {
+  max-width: 1100px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.audioPlayer img {
+  width: 84px;
+  height: 84px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.12);
+}
+
+.audioPlayer .text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.audioPlayer .title {
+  font-weight: 700;
+  font-size: 15px;
+}
+.audioPlayer .showTitle {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.audioPlayer .controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 320px;
+  justify-content: flex-end;
+}
+
+.audioPlayer .playButton {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: inline-grid;
+  place-items: center;
+  background: linear-gradient(
+    180deg,
+    var(--accent),
+    color-mix(in srgb, var(--accent) 75%, transparent)
+  );
+  color: white;
+  font-size: 18px;
+  box-shadow: 0 8px 24px rgba(107, 70, 255, 0.28);
+}
+
+.audioPlayer .time {
+  font-size: 13px;
+  color: var(--muted);
+  min-width: 44px;
+  text-align: center;
+}
+
+.seekBar {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 260px;
+  height: 8px;
+  border-radius: 16px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent) 50%, transparent),
+    color-mix(in srgb, var(--border) 30%, transparent)
+  );
+  outline: none;
+}
+.seekBar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 3px solid var(--accent);
+  box-shadow: 0 2px 8px rgba(2, 6, 23, 0.12);
+}
+
+.audioPlayer .closeButton {
+  font-size: 16px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+}
+
+/* =========================================
+   FAVORITES
+========================================= */
+.favorites {
+  padding: 20px;
+}
+.favorites .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.sortSelect {
+  padding: 6px 8px;
+}
+.loading,
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  min-height: 50vh;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--primary-light);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.text {
+  margin-top: 1.5rem;
+  color: var(--text-light);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 900px) {
+  .showDetails .image {
+    width: 220px;
+    height: 220px;
+  }
+
+  .podcastDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding: 1rem 0;
+}
+  .carouselCard {
+    width: 200px;
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  header h1 {
+    font-size: 16px;
+  }
+  header nav a {
+    display: none;
+  } /* keep header compact on mobile; nav links can be brought back with a hamburger if desired */
+
+  /* theme toggle floats to right, smaller */
+  .themeToggle {
+    width: 48px;
+    height: 26px;
+  }
+  .themeToggle::after {
+    width: 20px;
+    height: 20px;
+    transform: translateX(0);
+  }
+  [data-theme="dark"] .themeToggle::after {
+    transform: translateX(22px);
+  }
+
+  /* stack filters vertically and stretch controls */
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px;
+  }
+  .filters .control {
+    width: 100%;
+    min-width: auto;
+    height: var(--control-height);
+  }
+  .searchBar input[type="text"] {
+    width: 100%;
+  }
+  .podcastGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  /* carousel arrows slightly smaller */
+  .navButton {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  /* audio player layout stacks */
+  .audioPlayer > * {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+  }
+  .audioPlayer .controls {
+    width: 100%;
+    justify-content: center;
+    min-width: 0;
+  }
+  .audioPlayer .text {
+    align-items: center;
+  }
+}
+
+@media (max-width: 380px) {
+  .podcastGrid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .carousel {
+    gap: 10px;
+    padding: 6px;
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+.center {
+  text-align: center;
+}
+.muted {
+  color: var(--muted);
+  font-size: 13px;
 }

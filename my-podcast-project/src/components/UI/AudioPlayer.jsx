@@ -73,6 +73,7 @@ export default function AudioPlayer() {
       if (isPlaying) {
         e.preventDefault();
         e.returnValue = "";
+        console.log("Audio is playing, are you sure you want to leave?");
       }
     };
 

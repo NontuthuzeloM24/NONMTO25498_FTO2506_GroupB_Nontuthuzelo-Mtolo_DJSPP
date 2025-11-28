@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
-import styles from "./Header.module.css";
 
 /**
  * @component Header
@@ -10,18 +9,16 @@ import styles from "./Header.module.css";
  */
 export default function Header() {
   return (
-    <header className={styles.header}>
-      <Link to="/" className={styles.logo}>
-        <h1 className={styles.title}>🎙️ My Podcast App</h1>
-      </Link>
-      
-      <nav className={styles.nav}>
-        <Link to="/" className={styles.navLink}>
-          Home
+    <header>
+      <div className="left">
+        <Link to="/">
+          <h1>🎙️ Podcast App</h1>
         </Link>
-        <Link to="/favorites" className={styles.navLink}>
-          ❤️ Favorites
-        </Link>
+      </div>
+
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/favorites">❤️ Favorites</Link>
         <ThemeToggle />
       </nav>
     </header>

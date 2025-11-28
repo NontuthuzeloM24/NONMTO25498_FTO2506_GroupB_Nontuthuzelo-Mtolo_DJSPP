@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styles from "./GenreFilter.module.css";
 
 /**
  * @component GenreFilter
@@ -29,13 +28,10 @@ export default function GenreFilter({ selectedGenreId, onChange }) {
   }, []);
 
   return (
-    <div className={styles.genreFilter}>
-      <label htmlFor="genre-select" className={styles.label}>
-        Genre:
-      </label>
+    <div className="genreFilter">
+      <label htmlFor="genre-select">Genre:</label>
       <select
         id="genre-select"
-        className={styles.select}
         value={selectedGenreId || ""}
         onChange={(e) => onChange(e.target.value)}
       >

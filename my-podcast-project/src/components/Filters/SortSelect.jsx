@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./SortSelect.module.css";
 
 /**
  * @component SortSelect
@@ -11,12 +10,9 @@ import styles from "./SortSelect.module.css";
  */
 export default function SortSelect({ sortOrder, onChange }) {
   return (
-    <div className={styles.sortSelect}>
-      <label className={styles.label} htmlFor="sort">
-        Sort:
-      </label>
+    <div className="sortSelect">
+      <label htmlFor="sort">Sort:</label>
       <select
-        className={styles.select}
         id="sort"
         value={sortOrder}
         onChange={(e) => onChange(e.target.value)}

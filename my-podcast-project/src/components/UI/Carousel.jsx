@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import styles from "./Carousel.module.css";
 
 /**
  * @component Carousel
  * Horizontally scrollable carousel for displaying recommended podcast shows.
- * Supports arrow navigation, swipe gestures, and looping.
+ * Supports arrow navigation with infinite looping and auto-scroll indicators.
  * @param {Object} props
  * @param {Array<Object>} props.shows - Array of show objects to display
  * @returns {JSX.Element} Carousel with show cards
@@ -26,6 +25,11 @@ export default function Carousel({ shows }) {
     9: "Kids and Family",
   };
 
+  if (!shows || shows.length === 0) return null;
+
+  // Get recommended shows (first 8 shows)
+  const recommendedShows = shows.slice(0, 8);
+
   /**
    * Navigate to next show (with looping)
    */
@@ -37,57 +41,58 @@ export default function Carousel({ shows }) {
    * Navigate to previous show (with looping)
    */
   const goToPrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + shows.length) % shows.length);
+    setCurrentIndex((prev) =>
+      prev === 0 ? recommendedShows.length - 1 : prev - 1
+    );
   };
 
   /**
-   * Scroll carousel to current index
+   * Scroll carousel to show current index card
    */
   useEffect(() => {
     if (carouselRef.current) {
-      const scrollAmount = currentIndex * carouselRef.current.offsetWidth;
+      const cardWidth = 280;
+      const scrollPosition = currentIndex * cardWidth;
+
       carouselRef.current.scrollTo({
-        left: scrollAmount,
+        left: scrollPosition,
         behavior: "smooth",
       });
     }
   }, [currentIndex]);
 
-  if (!shows || shows.length === 0) return null;
-
-  // Get 6 random shows for carousel
-  const recommendedShows = shows.slice(0, 6);
-
   return (
-    <section className={styles.carouselSection}>
-      <h2 className={styles.heading}>🎧 Recommended Shows</h2>
+    <section className="carouselSection">
+      <h2>🎧 Recommended Shows</h2>
 
-      <div className={styles.carouselContainer}>
+      <div className="carouselContainer">
         <button
-          className={`${styles.navButton} ${styles.navButtonPrev}`}
+          className="navButton navButtonPrev"
           onClick={goToPrev}
           aria-label="Previous show"
         >
           ‹
         </button>
 
-        <div className={styles.carousel} ref={carouselRef}>
-          {recommendedShows.map((show) => (
+        <div className="carousel" ref={carouselRef}>
+          {recommendedShows.map((show, index) => (
             <Link
               key={show.id}
               to={`/show/${show.id}`}
-              className={styles.carouselCard}
+              className={`carouselCard ${
+                index === currentIndex ? "carouselCardActive" : ""
+              }`}
             >
               <img
                 src={show.image}
                 alt={show.title}
-                className={styles.carouselImage}
+                className="carouselImage"
               />
-              <div className={styles.carouselInfo}>
-                <h3 className={styles.carouselTitle}>{show.title}</h3>
-                <div className={styles.genres}>
+              <div className="carouselInfo">
+                <h3 className="carouselTitle">{show.title}</h3>
+                <div className="genres">
                   {show.genres?.slice(0, 2).map((genreId) => (
-                    <span key={genreId} className={styles.genreTag}>
+                    <span key={genreId} className="genreTag">
                       {genreMap[genreId] || `Genre ${genreId}`}
                     </span>
                   ))}
@@ -98,7 +103,7 @@ export default function Carousel({ shows }) {
         </div>
 
         <button
-          className={`${styles.navButton} ${styles.navButtonNext}`}
+          className="navButton navButtonNext"
           onClick={goToNext}
           aria-label="Next show"
         >
@@ -106,12 +111,12 @@ export default function Carousel({ shows }) {
         </button>
       </div>
 
-      <div className={styles.indicators}>
+      <div className="indicators">
         {recommendedShows.map((_, index) => (
           <button
             key={index}
-            className={`${styles.indicator} ${
-              index === currentIndex ? styles.indicatorActive : ""
+            className={`indicator ${
+              index === currentIndex ? "indicatorActive" : ""
             }`}
             onClick={() => setCurrentIndex(index)}
             aria-label={`Go to show ${index + 1}`}

@@ -1,5 +1,3 @@
-import styles from "./Pagination.module.css";
-
 /**
  * @component Pagination
  * Pagination component for navigating through pages of content.

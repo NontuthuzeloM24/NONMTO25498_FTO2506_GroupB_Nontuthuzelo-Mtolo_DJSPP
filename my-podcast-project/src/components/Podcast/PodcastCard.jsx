@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { formatDate } from "../../utils/formatDate";
-import styles from "./PodcastCard.module.css";
 
 /**
  * @component PodcastCard
@@ -18,17 +17,14 @@ import styles from "./PodcastCard.module.css";
  */
 export default function PodcastCard({ show }) {
   return (
-    <Link to={`/show/${show.id}`} className={styles.podcastCard}>
+    <Link to={`/show/${show.id}`} className="podcastCard">
       <img
         src={show.image || "/placeholder.png"}
         alt={show.title}
-        className={styles.image}
       />
-      <div className={styles.content}>
-        <h3 className={styles.title}>{show.title}</h3>
-        <p className={styles.updated}>
-          Updated: {formatDate(show.updated)}
-        </p>
+      <div className="info">
+        <h3 className="title">{show.title}</h3>
+        <p className="updated">Updated: {formatDate(show.updated)}</p>
       </div>
     </Link>
   );

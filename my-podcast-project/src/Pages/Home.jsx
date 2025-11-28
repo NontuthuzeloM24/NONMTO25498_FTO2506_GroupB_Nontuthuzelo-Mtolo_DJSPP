@@ -8,7 +8,6 @@ import PodcastGrid from "../components/Podcast/PodcastGrid";
 import Carousel from "../components/UI/Carousel";
 import Loading from "../components/UI/Loading";
 import Error from "../components/UI/Error";
-import styles from "./Home.module.css";
 
 const PAGE_SIZE = 10;
 
@@ -115,9 +114,8 @@ export default function Home() {
   if (error) return <Error message={error} />;
 
   return (
-    <main className={styles.home}>
-      {/* Filters Section - NOW ON TOP */}
-      <section className={styles.filters}>
+    <main className="home">
+      <section className="filters">
         <SearchBar
           value={searchTerm}
           onChange={(term) => updateSearchParams({ search: term, page: "1" })}
@@ -134,20 +132,19 @@ export default function Home() {
         />
       </section>
 
-      {/* Recommended Shows Carousel */}
       <Carousel shows={shows} />
 
-      <div className={styles.gridWrapper}>
+      <div className="gridWrapper">
         <PodcastGrid shows={pageShows} />
       </div>
 
       {totalPages > 1 && (
-        <section className={styles.pagination}>
+        <section className="pagination">
           {[...Array(totalPages).keys()].map((i) => (
             <button
               key={i + 1}
-              className={`${styles.paginationButton} ${
-                page === i + 1 ? styles.paginationButtonActive : ""
+              className={`paginationButton ${
+                page === i + 1 ? "paginationButtonActive" : ""
               }`}
               onClick={() => goToPage(i + 1)}
               aria-current={page === i + 1 ? "page" : undefined}

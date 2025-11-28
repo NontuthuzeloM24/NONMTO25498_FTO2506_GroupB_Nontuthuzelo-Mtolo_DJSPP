@@ -1,5 +1,3 @@
-import styles from "./Error.module.css";
-
 /**
  * @component Error
  * Error display component for showing error messages to users.
@@ -9,8 +7,8 @@ import styles from "./Error.module.css";
  */
 export default function Error({ message }) {
   return (
-    <div className={styles.error}>
-      <p className={styles.message}>{message}</p>
+    <div className="error">
+      <p className="message">{message}</p>
     </div>
   );
 }

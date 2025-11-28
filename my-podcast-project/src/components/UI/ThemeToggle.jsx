@@ -1,6 +1,5 @@
 import React from "react";
 import { usePodcastContext } from "../../context/PodcastContext";
-import styles from "./ThemeToggle.module.css";
 
 /**
  * @component ThemeToggle
@@ -13,7 +12,7 @@ export default function ThemeToggle() {
 
   return (
     <button
-      className={styles.themeToggle}
+      className="themeToggle"
       onClick={toggleTheme}
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
     >

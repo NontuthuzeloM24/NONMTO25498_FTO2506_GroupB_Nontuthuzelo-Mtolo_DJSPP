@@ -1,5 +1,3 @@
-import styles from "./Loading.module.css";
-
 /**
  * @component Loading
  * Loading indicator component with spinner animation.
@@ -7,9 +5,9 @@ import styles from "./Loading.module.css";
  */
 export default function Loading() {
   return (
-    <div className={styles.loading}>
-      <div className={styles.spinner}></div>
-      <p className={styles.text}>Loading...</p>
+    <div className="loading">
+      <div className="spinner"></div>
+      <p className="text">Loading...</p>
     </div>
   );
 }

@@ -1,8 +1,4 @@
-import React, { useState } from "react";
-import { usePodcastContext } from "../context/PodcastContext";
-import { Link } from "react-router-dom";
 import { formatDate } from "../utils/formatDate";
-import styles from "./Favorites.module.css";
 
 /**
  * @component Favorites
@@ -61,13 +57,13 @@ export default function Favorites() {
   const grouped = groupByShow();
   const sortedShows = sortShows(grouped);
 
-  if (favorites.length === 0) {
+  if (favourites.length === 0) {
     return (
-      <main className={styles.favorites}>
-        <h1 className={styles.heading}>❤️ Your Favorites</h1>
-        <div className={styles.empty}>
+      <main className="favorites">
+        <h1>❤️ Your Favorites</h1>
+        <div className="empty">
           <p>You haven't added any favorites yet.</p>
-          <Link to="/" className={styles.link}>
+          <Link to="/" className="link">
             Explore Shows
           </Link>
         </div>
@@ -76,16 +72,16 @@ export default function Favorites() {
   }
 
   return (
-    <main className={styles.favorites}>
-      <div className={styles.header}>
-        <h1 className={styles.heading}>❤️ Your Favorites</h1>
-        <div className={styles.sortControl}>
+    <main className="favorites">
+      <div className="header">
+        <h1>❤️ Your Favorites</h1>
+        <div className="sortControl">
           <label htmlFor="fav-sort">Sort by:</label>
           <select
             id="fav-sort"
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
-            className={styles.sortSelect}
+            className="sortSelect"
           >
             <option value="date-desc">Date Added (Newest)</option>
             <option value="date-asc">Date Added (Oldest)</option>
@@ -95,40 +91,39 @@ export default function Favorites() {
         </div>
       </div>
 
-      <div className={styles.showGroups}>
+      <div className="showGroups">
         {sortedShows.map(([showTitle, episodes]) => (
-          <section key={showTitle} className={styles.showGroup}>
-            <h2 className={styles.showTitle}>{showTitle}</h2>
-            <div className={styles.episodeList}>
+          <section key={showTitle} className="showGroup">
+            <h2 className="showTitle">{showTitle}</h2>
+            <div className="episodeList">
               {episodes.map((episode) => (
                 <div
                   key={`${episode.showTitle}-${episode.seasonNumber}-${episode.episode}`}
-                  className={styles.episodeCard}
+                  className="episodeCard"
                 >
                   <img
                     src={episode.image}
                     alt={episode.title}
-                    className={styles.episodeImage}
                   />
-                  <div className={styles.episodeInfo}>
-                    <p className={styles.episodeNumber}>
+                  <div className="episodeInfo">
+                    <p className="episodeNumber">
                       Season {episode.seasonNumber} • Episode {episode.episode}
                     </p>
-                    <h3 className={styles.episodeTitle}>{episode.title}</h3>
-                    <p className={styles.addedAt}>
+                    <h3 className="episodeTitle">{episode.title}</h3>
+                    <p className="addedAt">
                       Added: {formatDate(episode.addedAt)}
                     </p>
                   </div>
-                  <div className={styles.actions}>
+                  <div className="actions">
                     <button
-                      className={styles.playButton}
+                      className="playButton"
                       onClick={() => playEpisode(episode)}
                       aria-label="Play episode"
                     >
                       ▶
                     </button>
                     <button
-                      className={styles.removeButton}
+                      className="removeButton"
                       onClick={() => toggleFavorite(episode)}
                       aria-label="Remove from favorites"
                     >

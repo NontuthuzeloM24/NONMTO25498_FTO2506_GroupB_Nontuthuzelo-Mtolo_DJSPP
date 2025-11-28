@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./SearchBar.module.css";
 
 /**
  * @component SearchBar
@@ -11,9 +10,8 @@ import styles from "./SearchBar.module.css";
  */
 export default function SearchBar({ value, onChange }) {
   return (
-    <div className={styles.searchBar}>
+    <div className="searchBar">
       <input
-        className={styles.input}
         type="text"
         placeholder="Search podcasts..."
         value={value}

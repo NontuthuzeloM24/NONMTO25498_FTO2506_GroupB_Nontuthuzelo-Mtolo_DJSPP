@@ -4,7 +4,6 @@ import { fetchShowById } from "../api/fetchData";
 import PodcastDetail from "../components/Podcast/PodcastDetails";
 import Loading from "../components/UI/Loading";
 import Error from "../components/UI/Error";
-import styles from "./ShowDetails.module.css";
 
 /**
  * @component ShowDetails
@@ -47,17 +46,14 @@ export default function ShowDetails() {
         setLoading(false);
       });
   }, [id]);
-
   if (loading) return <Loading />;
-  if (error) return <Error message={error} />;
-
-  return (
-    <main className={styles.showDetails}>
-      <button className={styles.backButton} onClick={handleBackClick}>
-        ← Back
-      </button>
-
-      <PodcastDetail show={show} />
-    </main>
-  );
+if (error) return <Error message={error} />;
+return (
+<main className="showDetails">
+<button className="backButton" onClick={handleBackClick}>
+← Back
+</button>
+  <PodcastDetail show={show} />
+</main>
+);
 }

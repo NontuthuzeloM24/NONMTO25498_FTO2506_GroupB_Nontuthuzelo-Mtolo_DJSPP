@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { formatDate } from "../../utils/formatDate";
 import EpisodeCard from "./EpisodeCard";
-import styles from "./PodcastDetails.module.css";
 
 /**
  * @component PodcastDetail
@@ -33,7 +32,7 @@ export default function PodcastDetail({ show }) {
   };
 
   if (!show) {
-    return <p className={styles.notFound}>Show not found.</p>;
+    return <p className="notFound">Show not found.</p>;
   }
 
   /**
@@ -48,52 +47,52 @@ export default function PodcastDetail({ show }) {
   };
 
   return (
-    <section className={styles.podcastDetail}>
-      <div className={styles.header}>
+    <section className="podcastDetail">
+      <div className="header">
         <img
-          className={styles.image}
+          className="image"
           src={show.image}
           alt={`${show.title} podcast`}
         />
-        <div className={styles.info}>
-          <h2 className={styles.title}>{show.title}</h2>
-          <p className={styles.description}>{show.description}</p>
+        <div className="info">
+          <h2 className="title">{show.title}</h2>
+          <p className="description">{show.description}</p>
 
           {show.genres && show.genres.length > 0 && (
-            <div className={styles.genres}>
+            <div className="genres">
               {show.genres.map((genre) => (
-                <span key={genre} className={styles.genreTag}>
+                <span key={genre} className="genreTag">
                   {genreMap[genre] || `Genre ${genre}`}
                 </span>
               ))}
             </div>
           )}
 
-          <p className={styles.lastUpdated}>
+          <p className="lastUpdated">
             Last updated: {formatDate(show.updated)}
           </p>
         </div>
       </div>
 
-      <div className={styles.seasons}>
-        <h3 className={styles.seasonsTitle}>Seasons</h3>
+      <div className="seasons">
+        <h3 className="seasonsTitle">Seasons</h3>
         {show.seasons.map((season) => (
-          <div key={season.season} className={styles.season}>
+          <div key={season.season} className="season">
             <button
-              className={styles.seasonToggle}
+              className="seasonToggle"
               onClick={() => toggleSeason(season.season)}
               aria-expanded={!!expandedSeasons[season.season]}
             >
-              <span className={styles.seasonTitle}>
+              <span className="seasonTitle">
                 Season {season.season} ({season.episodes.length} episodes)
               </span>
-              <span className={styles.seasonIcon}>
+              <span className="seasonIcon">
                 {expandedSeasons[season.season] ? "▼" : "▶"}
               </span>
             </button>
 
             {expandedSeasons[season.season] && (
-              <div className={styles.episodeList}>
+              <div className="episodeList">
                 {season.episodes.map((episode) => (
                   <EpisodeCard
                     key={episode.episode}

@@ -1,6 +1,5 @@
 import React from "react";
 import PodcastCard from "./PodcastCard";
-import styles from "./PodcastGrid.module.css";
 
 /**
  * @component PodcastGrid
@@ -11,11 +10,11 @@ import styles from "./PodcastGrid.module.css";
  */
 export default function PodcastGrid({ shows }) {
   if (!shows.length) {
-    return <p className={styles.empty}>No podcasts found.</p>;
+    return <p className="empty">No podcasts found.</p>;
   }
 
   return (
-    <div className={styles.podcastGrid}>
+    <div className="podcastGrid">
       {shows.map((show) => (
         <PodcastCard key={show.id} show={show} />
       ))}

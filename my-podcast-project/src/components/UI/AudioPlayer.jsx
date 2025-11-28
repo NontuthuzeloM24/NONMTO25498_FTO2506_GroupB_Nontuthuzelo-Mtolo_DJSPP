@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { usePodcastContext } from "../../context/PodcastContext";
-import styles from "./AudioPlayer.module.css";
 
 /**
  * @component AudioPlayer
@@ -95,7 +94,7 @@ export default function AudioPlayer() {
   if (!currentEpisode) return null;
 
   return (
-    <div className={styles.audioPlayer}>
+    <div className="audioPlayer">
       <audio
         ref={audioRef}
         src={currentEpisode.file}
@@ -104,28 +103,26 @@ export default function AudioPlayer() {
         onEnded={() => setIsPlaying(false)}
       />
 
-      <div className={styles.info}>
-        <img
-          src={currentEpisode.image}
-          alt={currentEpisode.title}
-          className={styles.thumbnail}
-        />
-        <div className={styles.text}>
-          <p className={styles.title}>{currentEpisode.title}</p>
-          <p className={styles.showTitle}>{currentEpisode.showTitle}</p>
-        </div>
+      <img
+        src={currentEpisode.image}
+        alt={currentEpisode.title}
+      />
+
+      <div className="text">
+        <p className="title">{currentEpisode.title}</p>
+        <p className="showTitle">{currentEpisode.showTitle}</p>
       </div>
 
-      <div className={styles.controls}>
+      <div className="controls">
         <button
-          className={styles.playButton}
+          className="playButton"
           onClick={togglePlayPause}
           aria-label={isPlaying ? "Pause" : "Play"}
         >
           {isPlaying ? "⏸" : "▶"}
         </button>
 
-        <span className={styles.time}>{formatTime(currentTime)}</span>
+        <span className="time">{formatTime(currentTime)}</span>
 
         <input
           type="range"
@@ -133,14 +130,14 @@ export default function AudioPlayer() {
           max={duration || 0}
           value={currentTime}
           onChange={handleSeek}
-          className={styles.seekBar}
+          className="seekBar"
           aria-label="Seek audio"
         />
 
-        <span className={styles.time}>{formatTime(duration)}</span>
+        <span className="time">{formatTime(duration)}</span>
 
         <button
-          className={styles.closeButton}
+          className="closeButton"
           onClick={clearCurrentEpisode}
           aria-label="Close player"
         >

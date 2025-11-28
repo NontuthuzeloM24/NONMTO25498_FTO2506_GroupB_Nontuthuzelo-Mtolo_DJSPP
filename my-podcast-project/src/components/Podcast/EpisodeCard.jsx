@@ -1,19 +1,18 @@
 import React from "react";
 import { usePodcastContext } from "../../context/PodcastContext";
-import styles from "./EpisodeCard.module.css";
 
 /**
  * @component EpisodeCard
- * Card component for displaying individual episode with play and favourite controls.
+ * Card component for displaying individual episode with play and favorite controls.
  * @param {Object} props
  * @param {Object} props.episode - Episode object
  * @param {string} props.showTitle - Title of the parent show
  * @param {string} props.showImage - Image URL of the parent show
  * @param {number} props.seasonNumber - Season number
- * @returns {JSX.Element} Episode card with play and favourite buttons
+ * @returns {JSX.Element} Episode card with play and favorite buttons
  */
 export default function EpisodeCard({ episode, showTitle, showImage, seasonNumber }) {
-  const { playEpisode, toggleFavourite, isFavourite } = usePodcastContext();
+  const { playEpisode, toggleFavorite, isFavorite } = usePodcastContext();
 
   const episodeData = {
     ...episode,
@@ -26,45 +25,42 @@ export default function EpisodeCard({ episode, showTitle, showImage, seasonNumbe
     playEpisode(episodeData);
   };
 
-  const handleFavourite = (e) => {
+  const handleFavorite = (e) => {
     e.stopPropagation();
-    toggleFavourite(episodeData);
+    toggleFavorite(episodeData);
   };
 
-  const isEpisodeFavourite = isFavourite(episode.episode, seasonNumber, showTitle);
+  const isEpisodeFavorite = isFavorite(episode.episode, seasonNumber, showTitle);
 
   return (
-    <div className={styles.episodeCard}>
+    <div className="episodeCard">
       <img
         src={episodeData.image}
         alt={episode.title}
-        className={styles.image}
       />
-      <div className={styles.info}>
-        <p className={styles.episodeNumber}>Episode {episode.episode}</p>
-        <h4 className={styles.title}>{episode.title}</h4>
-        <p className={styles.description}>
+      <div className="episodeInfo">
+        <p className="episodeNumber">Episode {episode.episode}</p>
+        <h4 className="episodeTitle">{episode.title}</h4>
+        <p className="episodeDescription">
           {episode.description.length > 120
             ? episode.description.slice(0, 120) + "..."
             : episode.description}
         </p>
       </div>
-      <div className={styles.actions}>
+      <div className="actions">
         <button
-          className={styles.playButton}
+          className="playButton"
           onClick={handlePlay}
           aria-label="Play episode"
         >
           ▶
         </button>
         <button
-          className={`${styles.favouriteButton} ${
-            isEpisodeFavourite ? styles.favouriteActive : ""
-          }`}
-          onClick={handleFavourite}
-          aria-label={isEpisodeFavourite ? "Remove from favourites" : "Add to favourites"}
+          className={`favoriteButton ${isEpisodeFavorite ? "favoriteActive" : ""}`}
+          onClick={handleFavorite}
+          aria-label={isEpisodeFavorite ? "Remove from favorites" : "Add to favorites"}
         >
-          {isEpisodeFavourite ? "❤️" : "🤍"}
+          {isEpisodeFavorite ? "❤️" : "🤍"}
         </button>
       </div>
     </div>

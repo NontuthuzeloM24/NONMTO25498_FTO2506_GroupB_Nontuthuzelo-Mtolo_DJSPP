@@ -205,7 +205,7 @@ header nav a:hover {
 }
 
 .searchBar input[type="text"] {
-  border: 2px solid var(--primary);
+  border: 2px solid var(--accent);
   border-radius: 8px;
   outline: none;
   width: 320px;
@@ -216,7 +216,7 @@ header nav a:hover {
 
 .filters select {
   appearance: none;
-  border: 2px solid var(--primary);
+  border: 2px solid var(--accent);
   border-radius: 8px;
   background: transparent;
   font-size: 14px;
@@ -390,10 +390,17 @@ header nav a:hover {
   max-width: 1000px;
   margin: 0 auto;
 }
+
+/* Back button spacing */
+.showDetails > button {
+  margin-bottom: 20px;
+}
+
 .showDetails .header {
   display: flex;
-  gap: 18px;
+  gap: 24px;
   align-items: flex-start;
+  margin-bottom: 20px;
 }
 .showDetails .image {
   width: 300px;
@@ -407,27 +414,44 @@ header nav a:hover {
 }
 .showDetails .title {
   font-size: 24px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  color: var(--text);
 }
 .showDetails .description {
   color: var(--muted);
   line-height: 1.6;
+  margin-bottom: 16px;
 }
 
 .seasons {
-  margin-top: 18px;
+  margin-top: 24px;
 }
+
+.seasons h2,
+.seasons h3 {
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
 .seasonToggle {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 12px;
+  padding: 12px 16px;
   background: var(--paper);
   border-radius: 10px;
   border: 1px solid var(--border);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   cursor: pointer;
+  color: var(--text);
+  font-weight: 600;
+  transition: all 180ms ease;
+}
+
+.seasonToggle:hover {
+  background: color-mix(in srgb, var(--accent) 5%, var(--paper));
+  border-color: var(--accent);
 }
 
 /* =========================================
@@ -496,12 +520,8 @@ header nav a:hover {
   left: 0;
   bottom: 0;
   width: 100%;
-  padding: 14px 18px;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--paper) 98%, transparent),
-    rgba(0, 0, 0, 0.02)
-  );
+  padding: 16px 20px;
+  background: var(--paper); /* <-- CHANGED TO PURE WHITE BACKGROUND */
   border-top: 1px solid var(--border);
   box-shadow: 0 -6px 30px rgba(2, 6, 23, 0.06);
   z-index: 200;
@@ -509,12 +529,13 @@ header nav a:hover {
   justify-content: center;
 }
 
+
 .audioPlayer > * {
   max-width: 1100px;
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 20px;
 }
 
 .audioPlayer img {
@@ -523,29 +544,38 @@ header nav a:hover {
   border-radius: 10px;
   object-fit: cover;
   box-shadow: 0 8px 24px rgba(2, 6, 23, 0.12);
+  flex-shrink: 0;
 }
 
 .audioPlayer .text {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  min-width: 0;
 }
 .audioPlayer .title {
   font-weight: 700;
   font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .audioPlayer .showTitle {
   font-size: 13px;
   color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .audioPlayer .controls {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   min-width: 320px;
   justify-content: flex-end;
+  flex-shrink: 0;
 }
 
 .audioPlayer .playButton {
@@ -598,8 +628,15 @@ header nav a:hover {
   font-size: 16px;
   padding: 8px 10px;
   border-radius: 10px;
-  border: 1px solid var(--border);
-  background: transparent;
+  place-items: center;
+  background: linear-gradient(
+    180deg,
+    var(--accent),
+    color-mix(in srgb, var(--accent) 75%, transparent)
+  );
+  color: white;
+  font-size: 18px;
+  box-shadow: 0 8px 24px rgba(107, 70, 255, 0.28);
 }
 
 /* =========================================
@@ -653,9 +690,14 @@ header nav a:hover {
    RESPONSIVE
 ========================================= */
 @media (max-width: 900px) {
+  .showDetails .header {
+    flex-direction: column;
+    align-items: center;
+  }
   .showDetails .image {
-    width: 220px;
-    height: 220px;
+    width: 100%;
+    max-width: 300px;
+    height: auto;
   }
   .carouselCard {
     width: 200px;
@@ -665,31 +707,39 @@ header nav a:hover {
 
 @media (max-width: 600px) {
   header {
-    padding: 10px 12px;
-    gap: 8px;
+    padding: 8px 10px;
+    gap: 6px;
   }
   header h1 {
-    font-size: 16px;
+    font-size: 14px;
+    letter-spacing: -0.3px;
+  }
+  
+  /* Show home and favorites icons on mobile */
+  header nav {
+    display: flex;
+    gap: 6px;
   }
   header nav a {
-    display: none;
-  } /* keep header compact on mobile; nav links can be brought back with a hamburger if desired */
+    padding: 4px 6px;
+    font-size: 18px;
+  }
 
   /* theme toggle floats to right, smaller */
   .themeToggle {
-    width: 48px;
-    height: 26px;
+    width: 46px;
+    height: 24px;
   }
   .themeToggle::after {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     transform: translateX(0);
   }
   [data-theme="dark"] .themeToggle::after {
     transform: translateX(22px);
   }
 
-  /* stack filters vertically and stretch controls */
+  /* FIXED: stack filters vertically with equal widths */
   .filters {
     flex-direction: column;
     align-items: stretch;
@@ -701,9 +751,42 @@ header nav a:hover {
     min-width: auto;
     height: var(--control-height);
   }
-  .searchBar input[type="text"] {
+  .searchBar input[type="text"],
+  .filters select {
     width: 100%;
   }
+  
+  /* FIXED: Stack podcast details vertically on mobile */
+  .showDetails {
+    padding: 14px;
+  }
+  
+  .showDetails > button {
+    margin-bottom: 16px;
+  }
+  
+  .showDetails .header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .showDetails .image {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+  }
+  
+  .seasons {
+    margin-top: 20px;
+  }
+  
+  .seasonToggle {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  
   .podcastGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
@@ -717,19 +800,49 @@ header nav a:hover {
   }
 
   /* audio player layout stacks */
+  .audioPlayer {
+    padding: 14px 12px;
+  }
   .audioPlayer > * {
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
     align-items: center;
-    text-align: center;
+    justify-content: space-between;
+  }
+  .audioPlayer img {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+  }
+  .audioPlayer .text {
+    flex: 1;
+    min-width: 120px;
+    align-items: flex-start;
+    text-align: left;
   }
   .audioPlayer .controls {
     width: 100%;
     justify-content: center;
     min-width: 0;
+    gap: 10px;
+    order: 3;
   }
-  .audioPlayer .text {
-    align-items: center;
+  .audioPlayer .playButton {
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+  }
+  .seekBar {
+    width: 140px;
+  }
+  .audioPlayer .time {
+    font-size: 12px;
+    min-width: 38px;
+  }
+  .audioPlayer .closeButton {
+    padding: 6px 8px;
+    font-size: 14px;
   }
 }
 

@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { usePodcastContext } from "../context/PodcastContext";
 import { formatDate } from "../utils/formatDate";
 
 /**
@@ -57,7 +60,7 @@ export default function Favorites() {
   const grouped = groupByShow();
   const sortedShows = sortShows(grouped);
 
-  if (favourites.length === 0) {
+  if (favorites.length === 0) {
     return (
       <main className="favorites">
         <h1>❤️ Your Favorites</h1>
